@@ -6,35 +6,35 @@ public struct StaticMember<Base> {
     let base: Base
 }
 
-public protocol IntrospectableViewType {
+public protocol ViewType {
     typealias Member = StaticMember<Self>
 }
 
 // MARK: SwiftUI.List
 
-public struct IntrospectableListType: IntrospectableViewType {}
+public struct ListType: ViewType {}
 
-extension StaticMember where Base == IntrospectableListType {
+extension StaticMember where Base == ListType {
     public static var list: Self { .init(base: .init()) }
 }
 
 // MARK: SwiftUI.NavigationStack
 
 @available(iOS 16, tvOS 16, macOS 13, *)
-public struct IntrospectableNavigationStackType: IntrospectableViewType {}
+public struct NavigationStackType: ViewType {}
 
 @available(iOS 16, tvOS 16, macOS 13, *)
-extension StaticMember where Base == IntrospectableNavigationStackType {
+extension StaticMember where Base == NavigationStackType {
     public static var navigationStack: Self { .init(base: .init()) }
 }
 
 // MARK: Platform
 
-public struct ViewTypePlatformDescriptor<ViewType: IntrospectableViewType, PlatformView> {
+public struct PlatformViewDescriptor<SwiftUIView: ViewType, PlatformView> {
     var selector: (IntrospectionUIView) -> PlatformView?
 }
 
-extension ViewTypePlatformDescriptor where ViewType == IntrospectableListType, PlatformView == UITableView {
+extension PlatformViewDescriptor where SwiftUIView == ListType, PlatformView == UITableView {
     static var iOS: Self {
         return .init { introspectionUIView in
             nil
@@ -43,11 +43,11 @@ extension ViewTypePlatformDescriptor where ViewType == IntrospectableListType, P
 }
 
 extension View {
-    func introspect<ViewType: IntrospectableViewType, PlatformView>(
-        _ viewType: ViewType.Member,
-        on platform: ViewTypePlatformDescriptor<ViewType, PlatformView>,
+    func introspect<SwiftUIView: ViewType, PlatformView>(
+        _ view: SwiftUIView.Member,
+        on platform: PlatformViewDescriptor<SwiftUIView, PlatformView>,
         customize: (UIView) -> Void
-    ) -> some View {
+    ) -> some SwiftUI.View {
         EmptyView()
     }
 }
