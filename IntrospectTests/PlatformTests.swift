@@ -1,34 +1,5 @@
-import XCTest
 @testable import Introspect
-
-//import SwiftUI
-//
-//public struct IntrospectableViewType<T: View> {}
-//
-//public typealias IntrospectableListType = IntrospectableViewType<List<AnyHashable, AnyView>>
-//
-//@available(iOS 16, tvOS 16, macOS 13, *)
-//public typealias IntrospectableNavigationStackType = IntrospectableViewType<NavigationStack<Any, AnyView>>
-//
-//extension IntrospectableViewType {
-//    public static let list = IntrospectableListType()
-//    @available(iOS 16, tvOS 16, macOS 13, *)
-//    public static let navigationStack = IntrospectableNavigationStackType()
-//}
-//
-//extension View {
-//    func introspect(
-//        _ view: IntrospectableViewType,
-//        on platform: Platform,
-//        customize: (UIView) -> Void
-//    ) -> some View {
-//        EmptyView()
-//    }
-//}
-//
-//EmptyView().introspect(.list, on: .iOS(.v14)) { tableView in
-//
-//}
+import XCTest
 
 final class PlatformTests: XCTestCase {
     func test_iOS() {
