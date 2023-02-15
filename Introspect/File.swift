@@ -54,7 +54,7 @@ extension View {
 
 struct Something: View {
     var body: some View {
-//        EmptyView().introspect(.list, on: .iOS(.v14..<.v16)) { tableView in
+//        EmptyView().introspect(.list, on: .iOS(.v14, .v15, .v16)) { tableView in
 //
 //        }
         EmptyView().introspect(.list, on: .iOS) { tableView in
