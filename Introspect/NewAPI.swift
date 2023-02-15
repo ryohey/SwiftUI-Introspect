@@ -33,64 +33,67 @@ extension StaticMember where Base == NavigationStackType {
 public struct PlatformDescriptor<SwiftUIView: ViewType, PlatformView> {}
 
 extension PlatformDescriptor {
-    static func iOS(_ versions: iOSVersionDescriptor<SwiftUIView, PlatformView>...) -> Self {
+    public static func iOS(_ versions: iOSVersionDescriptor<SwiftUIView, PlatformView>...) -> Self {
         fatalError()
     }
 }
 
 //public protocol PlatformVersionDescriptor {
-//    associatedtype SwiftUIView
+//    associatedtype PlatformVersionType: PlatformVersion
+//    associatedtype SwiftUIView: ViewType
+//    associatedtype PlatformView
+//
+//    var platformVersion: PlatformVersionType {}
 //}
 
 public struct iOSVersionDescriptor<SwiftUIView: ViewType, PlatformView> {
+    var version: Platform.iOSVersion
     var selector: (IntrospectionUIView) -> PlatformView?
+
+    init(_ version: Platform.iOSVersion, selector: @escaping (IntrospectionUIView) -> PlatformView?) {
+        self.version = version
+        self.selector = selector
+    }
 }
 
 extension iOSVersionDescriptor where SwiftUIView == ListType, PlatformView == UITableView {
-    static var v13: Self {
-        return .init { uiView in
-            nil
-        }
+    public static let v13 = Self(.v13) { uiView in
+        nil
     }
 
-    static var v14: Self {
-        return .init { uiView in
-            nil
-        }
-    }
-
-    static var v15: Self {
-        return .init { uiView in
-            nil
-        }
-    }
+//    public static var v13: Self {
+//        return .init { uiView in
+//            nil
+//        }
+//    }
+//
+//    public static var v14: Self {
+//        return .init { uiView in
+//            nil
+//        }
+//    }
+//
+//    public static var v15: Self {
+//        return .init { uiView in
+//            nil
+//        }
+//    }
 }
 
 extension iOSVersionDescriptor where SwiftUIView == ListType, PlatformView == UICollectionView {
-    static var v16: Self {
-        return .init { uiView in
-            nil
-        }
-    }
+//    public static var v16: Self {
+//        return .init { uiView in
+//            nil
+//        }
+//    }
 }
 
 extension View {
-    func introspect<SwiftUIView: ViewType, PlatformView>(
+    public func introspect<SwiftUIView: ViewType, PlatformView>(
         _ view: SwiftUIView.Member,
-        on platform: PlatformDescriptor<SwiftUIView, PlatformView>,
+        on platforms: PlatformDescriptor<SwiftUIView, PlatformView>...,
         customize: (PlatformView) -> Void
-    ) -> some SwiftUI.View {
+    ) -> some View {
         EmptyView()
-    }
-}
-
-struct Something: View {
-    var body: some View {
-//        EmptyView().introspect(.list, on: .iOS(.v14, .v15, .v16)) { tableView in
-//
-//        }
-        EmptyView().introspect(.list, on: .iOS(.v16)) { collectionView in
-
-        }
     }
 }

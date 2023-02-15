@@ -10,6 +10,7 @@ public class IntrospectionUIView: UIView {
     required init() {
         super.init(frame: .zero)
         isHidden = true
+        isAccessibilityElement = false
         isUserInteractionEnabled = false
     }
     
