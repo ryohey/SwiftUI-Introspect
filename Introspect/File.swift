@@ -30,13 +30,45 @@ extension StaticMember where Base == NavigationStackType {
 
 // MARK: Platforms
 
-public struct PlatformViewDescriptor<SwiftUIView: ViewType, PlatformView> {
+public struct PlatformDescriptor<SwiftUIView: ViewType, PlatformView> {}
+
+extension PlatformDescriptor {
+    static func iOS(_ versions: iOSVersionDescriptor<SwiftUIView, PlatformView>...) -> Self {
+        fatalError()
+    }
+}
+
+//public protocol PlatformVersionDescriptor {
+//    associatedtype SwiftUIView
+//}
+
+public struct iOSVersionDescriptor<SwiftUIView: ViewType, PlatformView> {
     var selector: (IntrospectionUIView) -> PlatformView?
 }
 
-extension PlatformViewDescriptor where SwiftUIView == ListType, PlatformView == UITableView {
-    static var iOS: Self {
-        return .init { introspectionUIView in
+extension iOSVersionDescriptor where SwiftUIView == ListType, PlatformView == UITableView {
+    static var v13: Self {
+        return .init { uiView in
+            nil
+        }
+    }
+
+    static var v14: Self {
+        return .init { uiView in
+            nil
+        }
+    }
+
+    static var v15: Self {
+        return .init { uiView in
+            nil
+        }
+    }
+}
+
+extension iOSVersionDescriptor where SwiftUIView == ListType, PlatformView == UICollectionView {
+    static var v16: Self {
+        return .init { uiView in
             nil
         }
     }
@@ -45,8 +77,8 @@ extension PlatformViewDescriptor where SwiftUIView == ListType, PlatformView == 
 extension View {
     func introspect<SwiftUIView: ViewType, PlatformView>(
         _ view: SwiftUIView.Member,
-        on platform: PlatformViewDescriptor<SwiftUIView, PlatformView>,
-        customize: (UIView) -> Void
+        on platform: PlatformDescriptor<SwiftUIView, PlatformView>,
+        customize: (PlatformView) -> Void
     ) -> some SwiftUI.View {
         EmptyView()
     }
@@ -57,8 +89,8 @@ struct Something: View {
 //        EmptyView().introspect(.list, on: .iOS(.v14, .v15, .v16)) { tableView in
 //
 //        }
-        EmptyView().introspect(.list, on: .iOS) { tableView in
-            
+        EmptyView().introspect(.list, on: .iOS(.v16)) { collectionView in
+
         }
     }
 }
