@@ -86,11 +86,12 @@ extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == 
 }
 
 extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == ListType, PlatformView == UICollectionView {
-//    public static var v16: Self {
-//        return .init { uiView in
-//            nil
-//        }
-//    }
+    public static let v16 = Self(for: .v16) { customize in
+        UIKitIntrospectionView(
+            selector: TargetViewSelector.ancestorOrSiblingContaining,
+            customize: customize
+        )
+    }
 }
 
 extension View {
