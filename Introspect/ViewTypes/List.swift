@@ -17,9 +17,7 @@ extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == 
             customize: customize
         )
     }
-
     public static let v14 = Self(for: .v14, sameAs: .v13)
-
     public static let v15 = Self(for: .v15, sameAs: .v13)
 }
 
@@ -41,9 +39,7 @@ extension PlatformVersionDescriptor where Version == tvOSVersion, SwiftUIView ==
             customize: customize
         )
     }
-
     public static let v14 = Self(for: .v14, sameAs: .v13)
-
     public static let v15 = Self(for: .v15, sameAs: .v13)
 }
 
