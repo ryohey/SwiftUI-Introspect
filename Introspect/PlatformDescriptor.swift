@@ -7,15 +7,15 @@ public struct PlatformDescriptor<SwiftUIView: ViewType, PlatformView> {
 }
 
 extension PlatformDescriptor {
-    public static func iOS(_ versions: PlatformVersionDescriptor<iOSVersion, SwiftUIView, PlatformView>...) -> Self {
+    public static func iOS(_ versions: (PlatformVersionDescriptor<iOSVersion, SwiftUIView, PlatformView>)...) -> Self {
         Self(introspectingView: versions.lazy.compactMap(\.introspectingView).first)
     }
 
-    public static func macOS(_ versions: PlatformVersionDescriptor<macOSVersion, SwiftUIView, PlatformView>...) -> Self {
+    public static func macOS(_ versions: (PlatformVersionDescriptor<macOSVersion, SwiftUIView, PlatformView>)...) -> Self {
         Self(introspectingView: versions.lazy.compactMap(\.introspectingView).first)
     }
 
-    public static func tvOS(_ versions: PlatformVersionDescriptor<tvOSVersion, SwiftUIView, PlatformView>...) -> Self {
+    public static func tvOS(_ versions: (PlatformVersionDescriptor<tvOSVersion, SwiftUIView, PlatformView>)...) -> Self {
         Self(introspectingView: versions.lazy.compactMap(\.introspectingView).first)
     }
 }
