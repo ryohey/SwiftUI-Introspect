@@ -42,15 +42,17 @@ public struct PlatformVersionDescriptor<Version: PlatformVersion, SwiftUIView: V
     }
 
     static func unavailable(for version: Version, file: StaticString = #file, line: UInt = #line) -> Self {
+        let filePath = file.withUTF8Buffer { String(decoding: $0, as: UTF8.self) }
+        let fileName = URL(fileURLWithPath: filePath).lastPathComponent
         runtimeWarn(
             """
-            If you're seeing this, someone forgot to mark \(file):\(line) as unavailable.
+            If you're seeing this, someone forgot to mark \(fileName):\(line) as unavailable.
 
             This results in a no-op, but should probably be reported upstream for fixing.
 
             Please use the following link to automatically file a GitHub issue:
 
-            - https://github.com/siteline/SwiftUI-Introspect/issues/new?title=\(file):\(line)
+            - https://github.com/siteline/SwiftUI-Introspect/issues/new?title=\(fileName):\(line)
             """
         )
         return Self(for: version) { _ in EmptyView() }
