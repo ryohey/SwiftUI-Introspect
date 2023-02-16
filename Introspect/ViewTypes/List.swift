@@ -10,6 +10,9 @@ extension StaticMember where Base == ListType {
 
 // MARK: SwiftUI.List - iOS
 
+#if os(iOS)
+import UIKit
+
 extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == ListType, PlatformView == UITableView {
     public static let v13 = Self(for: .v13) { customize in
         UIKitIntrospectionView(
@@ -29,8 +32,12 @@ extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == 
         )
     }
 }
+#endif
 
 // MARK: SwiftUI.List - tvOS
+
+#if os(iOS)
+import UIKit
 
 extension PlatformVersionDescriptor where Version == tvOSVersion, SwiftUIView == ListType, PlatformView == UITableView {
     public static let v13 = Self(for: .v13) { customize in
@@ -47,3 +54,22 @@ extension PlatformVersionDescriptor where Version == tvOSVersion, SwiftUIView ==
     @available(*, unavailable, message: "SwiftUI.List is no longer a UIKit view on iOS 16")
     public static let v16 = unavailable(for: .v16)
 }
+#endif
+
+// MARK: SwiftUI.List - macOS
+
+#if os(macOS)
+import AppKit
+
+extension PlatformVersionDescriptor where Version == macOSVersion, SwiftUIView == ListType, PlatformView == NSTableView {
+    public static let v10_15 = Self(for: .v10_15) { customize in
+        AppKitIntrospectionView(
+            selector: TargetViewSelector.ancestorOrSiblingContaining,
+            customize: customize
+        )
+    }
+    public static let v11 = Self(for: .v11, sameAs: .v10_15)
+    public static let v12 = Self(for: .v12, sameAs: .v10_15)
+    public static let v13 = Self(for: .v13, sameAs: .v10_15)
+}
+#endif

@@ -19,6 +19,10 @@ final class NewAPITests: XCTestCase {
                 .introspect(.list, on: .iOS(.v16)) { collectionView in
                     spy()
                 }
+                #elseif os(macOS)
+                .introspect(.list, on: .macOS(.v10_15, .v11, .v12, .v13)) { tableView in
+                    spy()
+                }
                 #endif
             }
         }
