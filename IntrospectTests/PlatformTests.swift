@@ -34,12 +34,12 @@ final class PlatformTests: XCTestCase {
     }
 
     func test_iOS_Range() {
-        let sut: CountableRange<Platform.iOSVersion> = .v13 ..< .v16
+        let sut: CountableRange<iOSVersion> = .v13 ..< .v16
         XCTAssertEqual(Array(sut), [.v13, .v14, .v15])
     }
 
     func test_iOS_ClosedRange() {
-        let sut: CountableClosedRange<Platform.iOSVersion> = .v13 ... .v16
+        let sut: CountableClosedRange<iOSVersion> = .v13 ... .v16
         XCTAssertEqual(Array(sut), [.v13, .v14, .v15, .v16])
     }
 
@@ -75,12 +75,12 @@ final class PlatformTests: XCTestCase {
     }
 
     func test_macOS_Range() {
-        let sut: CountableRange<Platform.macOSVersion> = .v10_15 ..< .v13
+        let sut: CountableRange<macOSVersion> = .v10_15 ..< .v13
         XCTAssertEqual(Array(sut), [.v10_15, .v11, .v12])
     }
 
     func test_macOS_ClosedRange() {
-        let sut: CountableClosedRange<Platform.macOSVersion> = .v10_15 ... .v13
+        let sut: CountableClosedRange<macOSVersion> = .v10_15 ... .v13
         XCTAssertEqual(Array(sut), [.v10_15, .v11, .v12, .v13])
     }
 
@@ -116,12 +116,12 @@ final class PlatformTests: XCTestCase {
     }
 
     func test_tvOS_Range() {
-        let sut: CountableRange<Platform.tvOSVersion> = .v13 ..< .v16
+        let sut: CountableRange<tvOSVersion> = .v13 ..< .v16
         XCTAssertEqual(Array(sut), [.v13, .v14, .v15])
     }
 
     func test_tvOS_ClosedRange() {
-        let sut: CountableClosedRange<Platform.tvOSVersion> = .v13 ... .v16
+        let sut: CountableClosedRange<tvOSVersion> = .v13 ... .v16
         XCTAssertEqual(Array(sut), [.v13, .v14, .v15, .v16])
     }
 }

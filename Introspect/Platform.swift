@@ -1,40 +1,11 @@
 import Foundation
 
-protocol PlatformVersion: RawRepresentable, Comparable, Strideable where RawValue == Int, Stride == Int {
-    var isCurrent: Bool { get }
-}
-
-extension PlatformVersion {
-    func advanced(by n: Int) -> Self {
-        guard let instance = Self(rawValue: self.rawValue.advanced(by: n)) else {
-            fatalError("Calling advanced(by:) on PlatformVersion is unsafe and highly discouraged.")
-        }
-        return instance
-    }
-
-    func distance(to other: Self) -> Int {
-        self.rawValue.distance(to: other.rawValue)
-    }
-}
-
-enum Platform {
+public enum Platform {
     case iOS(iOSVersion)
     case macOS(macOSVersion)
     case tvOS(tvOSVersion)
 
-    enum iOSVersion: Int, PlatformVersion {
-        case v13, v14, v15, v16
-    }
-
-    enum macOSVersion: Int, PlatformVersion {
-        case v10_15, v11, v12, v13
-    }
-
-    enum tvOSVersion: Int, PlatformVersion {
-        case v13, v14, v15, v16
-    }
-
-    var isCurrent: Bool {
+    public var isCurrent: Bool {
         switch self {
         case .iOS(let version):
             return version.isCurrent
@@ -46,8 +17,10 @@ enum Platform {
     }
 }
 
-extension Platform.iOSVersion {
-    var isCurrent: Bool {
+public enum iOSVersion: Int, PlatformVersion {
+    case v13, v14, v15, v16
+
+    public var isCurrent: Bool {
         switch self {
         case .v13:
             if #available(iOS 14, *) {
@@ -82,8 +55,10 @@ extension Platform.iOSVersion {
     }
 }
 
-extension Platform.macOSVersion {
-    var isCurrent: Bool {
+public enum macOSVersion: Int, PlatformVersion {
+    case v10_15, v11, v12, v13
+
+    public var isCurrent: Bool {
         switch self {
         case .v10_15:
             if #available(macOS 11, *) {
@@ -118,8 +93,10 @@ extension Platform.macOSVersion {
     }
 }
 
-extension Platform.tvOSVersion {
-    var isCurrent: Bool {
+public enum tvOSVersion: Int, PlatformVersion {
+    case v13, v14, v15, v16
+
+    public var isCurrent: Bool {
         switch self {
         case .v13:
             if #available(tvOS 14, *) {
@@ -151,5 +128,22 @@ extension Platform.tvOSVersion {
             }
         }
         return false
+    }
+}
+
+public protocol PlatformVersion: RawRepresentable, Comparable, Strideable where RawValue == Int, Stride == Int {
+    var isCurrent: Bool { get }
+}
+
+extension PlatformVersion {
+    public func advanced(by n: Int) -> Self {
+        guard let instance = Self(rawValue: self.rawValue.advanced(by: n)) else {
+            fatalError("Calling advanced(by:) on PlatformVersion is unsafe and highly discouraged.")
+        }
+        return instance
+    }
+
+    public func distance(to other: Self) -> Int {
+        self.rawValue.distance(to: other.rawValue)
     }
 }
