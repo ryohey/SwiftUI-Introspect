@@ -13,8 +13,8 @@ final class NewAPITests: XCTestCase {
                     Text("Item 1")
                     Text("Item 2")
                 }
-                #if os(iOS)
-                .introspect(.list, on: .iOS(.v13, .v14, .v15)) { tableView in
+                #if os(iOS) || os(tvOS)
+                .introspect(.list, on: .iOS(.v13, .v14, .v15), .tvOS(.v13, .v14, .v15)) { tableView in
                     spy()
                 }
                 .introspect(.list, on: .iOS(.v16)) { collectionView in

@@ -433,7 +433,7 @@ class UIKitTests: XCTestCase {
     
     func testList() {
         if #available(tvOS 16, *) {
-            return // TODO: verify whether List still uses NSTableView under the hood in tvOS 16
+            return // TODO: verify whether List still uses UITableView under the hood in tvOS 16
         }
 
         let expectation1 = XCTestExpectation()
