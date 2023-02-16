@@ -10,7 +10,7 @@ extension StaticMember where Base == ListType {
 
 // MARK: SwiftUI.List - iOS
 
-#if os(iOS)
+#if canImport(UIKit)
 import UIKit
 
 extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == ListType, PlatformView == UITableView {
@@ -36,7 +36,7 @@ extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == 
 
 // MARK: SwiftUI.List - tvOS
 
-#if os(iOS)
+#if canImport(UIKit)
 import UIKit
 
 extension PlatformVersionDescriptor where Version == tvOSVersion, SwiftUIView == ListType, PlatformView == UITableView {
@@ -58,7 +58,7 @@ extension PlatformVersionDescriptor where Version == tvOSVersion, SwiftUIView ==
 
 // MARK: SwiftUI.List - macOS
 
-#if os(macOS)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 import AppKit
 
 extension PlatformVersionDescriptor where Version == macOSVersion, SwiftUIView == ListType, PlatformView == NSTableView {
