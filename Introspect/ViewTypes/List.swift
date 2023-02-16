@@ -48,6 +48,6 @@ extension PlatformVersionDescriptor where Version == tvOSVersion, SwiftUIView ==
 }
 
 extension PlatformVersionDescriptor where Version == tvOSVersion, SwiftUIView == ListType, PlatformView == UICollectionView {
-//    @available(*, unavailable, message: "SwiftUI.List is no longer a UIKit view on iOS 16")
+    @available(*, unavailable, message: "SwiftUI.List is no longer a UIKit view on iOS 16")
     public static let v16 = unavailable(for: .v16)
 }
