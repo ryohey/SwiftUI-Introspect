@@ -49,11 +49,18 @@ public struct PlatformVersionDescriptor<Version: PlatformVersion, SwiftUIView: V
     private let _introspectingView: IntrospectingView
 
     init<IntrospectingView: View>(
-        _ version: Version,
+        for version: Version,
         introspectingView: @escaping (@escaping (PlatformView) -> Void) -> IntrospectingView
     ) {
         self.version = version
         self._introspectingView = { customize in AnyView(introspectingView(customize)) }
+    }
+
+    init(
+        for version: Version,
+        sameAs other: Self
+    ) {
+        self.init(for: version, introspectingView: other._introspectingView)
     }
 
     var introspectingView: IntrospectingView? {
@@ -63,23 +70,19 @@ public struct PlatformVersionDescriptor<Version: PlatformVersion, SwiftUIView: V
             return nil
         }
     }
-
-    static func sameAs(_ other: Self, for version: Version) -> Self {
-        Self(version, introspectingView: other._introspectingView)
-    }
 }
 
 extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == ListType, PlatformView == UITableView {
-    public static let v13 = Self(.v13) { customize in
+    public static let v13 = Self(for: .v13) { customize in
         UIKitIntrospectionView(
             selector: TargetViewSelector.ancestorOrSiblingContaining,
             customize: customize
         )
     }
 
-    public static let v14 = sameAs(.v13, for: .v14)
+    public static let v14 = Self(for: .v14, sameAs: .v13)
 
-    public static let v15 = sameAs(.v13, for: .v15)
+    public static let v15 = Self(for: .v15, sameAs: .v13)
 }
 
 extension PlatformVersionDescriptor where Version == iOSVersion, SwiftUIView == ListType, PlatformView == UICollectionView {
